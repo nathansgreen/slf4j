@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004-2011 QOS.ch
+ * Copyright (c) 2004-2015 QOS.ch
  * All rights reserved.
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
@@ -30,9 +30,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import junit.framework.TestCase;
 import org.slf4j.Logger;
@@ -41,7 +43,7 @@ import org.slf4j.Logger;
  * @author Chetan Mehrotra
  */
 public class SubstitutableLoggerTest extends TestCase {
-    private static final Set<String> EXCLUDED_METHODS = new HashSet<String>(Arrays.asList("getName"));
+    private static final Set<String> EXCLUDED_METHODS = Collections.singleton("getName");
 
     public void testDelegate() throws Exception {
         SubstituteLogger log = new SubstituteLogger("foo");
@@ -62,15 +64,20 @@ public class SubstitutableLoggerTest extends TestCase {
     }
 
     private void invokeMethods(Logger proxyLogger) throws InvocationTargetException, IllegalAccessException {
-        for (Method m : Logger.class.getDeclaredMethods()) {
-            if (!EXCLUDED_METHODS.contains(m.getName())) {
-                m.invoke(proxyLogger, new Object[m.getParameterTypes().length]);
-            }
-        }
+        Arrays.asList(Logger.class.getDeclaredMethods()).stream()
+            .filter(m -> !EXCLUDED_METHODS.contains(m.getName()))
+            .filter(m -> !m.isDefault())
+            .forEach(m -> {
+                try {
+                    m.invoke(proxyLogger, new Object[m.getParameterTypes().length]);
+                } catch (InvocationTargetException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+        });
     }
 
     private class LoggerInvocationHandler implements InvocationHandler {
-        private final Set<String> invokedMethodSignatures = new HashSet<String>();
+        private final Set<String> invokedMethodSignatures = new HashSet<>();
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             invokedMethodSignatures.add(getMethodSignature(method));
@@ -86,17 +93,15 @@ public class SubstitutableLoggerTest extends TestCase {
     }
 
     private static Set<String> determineMethodSignatures(Class<Logger> loggerClass) {
-        Set<String> methodSignatures = new HashSet<String>();
-        for (Method m : loggerClass.getDeclaredMethods()) {
-            if (!EXCLUDED_METHODS.contains(m.getName())) {
-                methodSignatures.add(getMethodSignature(m));
-            }
-        }
-        return methodSignatures;
+        return Arrays.asList(loggerClass.getDeclaredMethods()).stream()
+            .filter(m -> !EXCLUDED_METHODS.contains(m.getName()))
+            .filter(m -> !m.isDefault())
+            .map(m -> getMethodSignature(m))
+            .collect(Collectors.toSet());
     }
 
     private static String getMethodSignature(Method m) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         result.add(m.getName());
         for (Class<?> clazz : m.getParameterTypes()) {
             result.add(clazz.getSimpleName());
