@@ -25,6 +25,8 @@
 
 package org.slf4j;
 
+import static org.slf4j.helpers.Util.getAll;
+
 /**
  * The org.slf4j.Logger interface is the main user entry point of SLF4J API.
  * It is expected that logging takes place through concrete implementations
@@ -108,6 +110,20 @@ public interface Logger {
 
     /**
      * Log a message at the TRACE level according to the specified format
+     * and argument.
+     *
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void trace(String format, Supplier<?> arg) {
+        if (isTraceEnabled()) {
+            trace(format, arg.get());
+        }
+    }
+
+    /**
+     * Log a message at the TRACE level according to the specified format
      * and arguments.
      * <p/>
      * <p>This form avoids superfluous object creation when the logger
@@ -119,6 +135,51 @@ public interface Logger {
      * @since 1.4
      */
     public void trace(String format, Object arg1, Object arg2);
+
+    /**
+     * Log a message at the TRACE level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(String format, Supplier<?> arg1, Object arg2) {
+        if (isTraceEnabled()) {
+            trace(format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * Log a message at the TRACE level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(String format, Object arg1, Supplier<?> arg2) {
+        if (isTraceEnabled()) {
+            trace(format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * Log a message at the TRACE level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isTraceEnabled()) {
+            trace(format, arg1.get(), arg2.get());
+        }
+    }
 
     /**
      * Log a message at the TRACE level according to the specified format
@@ -135,6 +196,34 @@ public interface Logger {
      * @since 1.4
      */
     public void trace(String format, Object... arguments);
+
+    /**
+     * Log a message at the TRACE level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void trace(String format, Supplier<?>... arguments) {
+        if (isTraceEnabled()) {
+            trace(format, getAll(arguments));
+        }
+    }
+
+    /**
+     * Log a message at the TRACE level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void trace(String format, ArraySupplier<?> arguments) {
+        if (isTraceEnabled()) {
+            trace(format, arguments.get());
+        }
+    }
 
     /**
      * Log an exception (throwable) at the TRACE level with an
@@ -179,6 +268,21 @@ public interface Logger {
     public void trace(Marker marker, String format, Object arg);
 
     /**
+     * This method is similar to {@link #trace(String, Supplier)} method except that the
+     * marker data is also taken into consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, Supplier<?> arg) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, arg.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #trace(String, Object, Object)}
      * method except that the marker data is also taken into
      * consideration.
@@ -192,6 +296,57 @@ public interface Logger {
     public void trace(Marker marker, String format, Object arg1, Object arg2);
 
     /**
+     * This method is similar to {@link #trace(String, Supplier, Object)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * This method is similar to {@link #trace(String, Object, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * This method is similar to {@link #trace(String, Supplier, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, arg1.get(), arg2.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #trace(String, Object...)}
      * method except that the marker data is also taken into
      * consideration.
@@ -202,6 +357,38 @@ public interface Logger {
      * @since 1.4
      */
     public void trace(Marker marker, String format, Object... argArray);
+
+    /**
+     * This method is similar to {@link #trace(String, Supplier...)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker   the marker data specific to this log statement
+     * @param format   the format string
+     * @param argArray an array of suppliers
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, Supplier<?>... argArray) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, getAll(argArray));
+        }
+    }
+
+    /**
+     * This method is similar to {@link #trace(String, ArraySupplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker   the marker data specific to this log statement
+     * @param format   the format string
+     * @param argArray a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void trace(Marker marker, String format, ArraySupplier<?> argArray) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, format, argArray.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #trace(String, Throwable)} method except that the
@@ -243,6 +430,20 @@ public interface Logger {
 
     /**
      * Log a message at the DEBUG level according to the specified format
+     * and argument.
+     *
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void debug(String format, Supplier<?> arg) {
+        if (isDebugEnabled()) {
+            debug(format, arg.get());
+        }
+    }
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
      * and arguments.
      * <p/>
      * <p>This form avoids superfluous object creation when the logger
@@ -253,6 +454,51 @@ public interface Logger {
      * @param arg2   the second argument
      */
     public void debug(String format, Object arg1, Object arg2);
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(String format, Supplier<?> arg1, Object arg2) {
+        if (isDebugEnabled()) {
+            debug(format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(String format, Object arg1, Supplier<?> arg2) {
+        if (isDebugEnabled()) {
+            debug(format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isDebugEnabled()) {
+            debug(format, arg1.get(), arg2.get());
+        }
+    }
 
     /**
      * Log a message at the DEBUG level according to the specified format
@@ -269,6 +515,34 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void debug(String format, Object... arguments);
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void debug(String format, Supplier<?>... arguments) {
+        if (isDebugEnabled()) {
+            debug(format, getAll(arguments));
+        }
+    }
+
+    /**
+     * Log a message at the DEBUG level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void debug(String format, ArraySupplier<?> arguments) {
+        if (isDebugEnabled()) {
+            debug(format, arguments.get());
+        }
+    }
 
     /**
      * Log an exception (throwable) at the DEBUG level with an
@@ -308,6 +582,21 @@ public interface Logger {
     public void debug(Marker marker, String format, Object arg);
 
     /**
+     * This method is similar to {@link #debug(String, Supplier)} method except that the
+     * marker data is also taken into consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, Supplier<?> arg) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, arg.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #debug(String, Object, Object)}
      * method except that the marker data is also taken into
      * consideration.
@@ -320,6 +609,57 @@ public interface Logger {
     public void debug(Marker marker, String format, Object arg1, Object arg2);
 
     /**
+     * This method is similar to {@link #debug(String, Supplier, Object)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * This method is similar to {@link #debug(String, Object, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * This method is similar to {@link #debug(String, Supplier, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, arg1.get(), arg2.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #debug(String, Object...)}
      * method except that the marker data is also taken into
      * consideration.
@@ -329,6 +669,38 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void debug(Marker marker, String format, Object... arguments);
+
+    /**
+     * This method is similar to {@link #debug(String, Supplier...)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, Supplier<?>... arguments) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, getAll(arguments));
+        }
+    }
+
+    /**
+     * This method is similar to {@link #debug(String, ArraySupplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void debug(Marker marker, String format, ArraySupplier<?> arguments) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, format, arguments.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #debug(String, Throwable)} method except that the
@@ -369,6 +741,20 @@ public interface Logger {
 
     /**
      * Log a message at the INFO level according to the specified format
+     * and argument.
+     *
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void info(String format, Supplier<?> arg) {
+        if (isInfoEnabled()) {
+            info(format, arg.get());
+        }
+    }
+
+    /**
+     * Log a message at the INFO level according to the specified format
      * and arguments.
      * <p/>
      * <p>This form avoids superfluous object creation when the logger
@@ -379,6 +765,51 @@ public interface Logger {
      * @param arg2   the second argument
      */
     public void info(String format, Object arg1, Object arg2);
+
+    /**
+     * Log a message at the INFO level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(String format, Supplier<?> arg1, Object arg2) {
+        if (isInfoEnabled()) {
+            info(format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * Log a message at the INFO level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(String format, Object arg1, Supplier<?> arg2) {
+        if (isInfoEnabled()) {
+            info(format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * Log a message at the INFO level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isInfoEnabled()) {
+            info(format, arg1.get(), arg2.get());
+        }
+    }
 
     /**
      * Log a message at the INFO level according to the specified format
@@ -395,6 +826,34 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void info(String format, Object... arguments);
+
+    /**
+     * Log a message at the INFO level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void info(String format, Supplier<?>... arguments) {
+        if (isInfoEnabled()) {
+            info(format, getAll(arguments));
+        }
+    }
+
+    /**
+     * Log a message at the INFO level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void info(String format, ArraySupplier<?> arguments) {
+        if (isInfoEnabled()) {
+            info(format, arguments.get());
+        }
+    }
 
     /**
      * Log an exception (throwable) at the INFO level with an
@@ -433,6 +892,21 @@ public interface Logger {
     public void info(Marker marker, String format, Object arg);
 
     /**
+     * This method is similar to {@link #info(String, Supplier)} method except that the
+     * marker data is also taken into consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, Supplier<?> arg) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, arg.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #info(String, Object, Object)}
      * method except that the marker data is also taken into
      * consideration.
@@ -445,6 +919,57 @@ public interface Logger {
     public void info(Marker marker, String format, Object arg1, Object arg2);
 
     /**
+     * This method is similar to {@link #info(String, Supplier, Object)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * This method is similar to {@link #info(String, Object, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * This method is similar to {@link #info(String, Supplier, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, arg1.get(), arg2.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #info(String, Object...)}
      * method except that the marker data is also taken into
      * consideration.
@@ -454,6 +979,38 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void info(Marker marker, String format, Object... arguments);
+
+    /**
+     * This method is similar to {@link #info(String, Supplier...)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, Supplier<?>... arguments) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, getAll(arguments));
+        }
+    }
+
+    /**
+     * This method is similar to {@link #info(String, ArraySupplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void info(Marker marker, String format, ArraySupplier<?> arguments) {
+        if (isInfoEnabled(marker)) {
+            info(marker, format, arguments.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #info(String, Throwable)} method
@@ -494,6 +1051,20 @@ public interface Logger {
 
     /**
      * Log a message at the WARN level according to the specified format
+     * and argument.
+     *
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void warn(String format, Supplier<?> arg) {
+        if (isWarnEnabled()) {
+            warn(format, arg.get());
+        }
+    }
+
+    /**
+     * Log a message at the WARN level according to the specified format
      * and arguments.
      * <p/>
      * <p>This form avoids superfluous string concatenation when the logger
@@ -511,6 +1082,34 @@ public interface Logger {
     /**
      * Log a message at the WARN level according to the specified format
      * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void warn(String format, Supplier<?>... arguments) {
+        if (isWarnEnabled()) {
+            warn(format, getAll(arguments));
+        }
+    }
+
+    /**
+     * Log a message at the WARN level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void warn(String format, ArraySupplier<?> arguments) {
+        if (isWarnEnabled()) {
+            warn(format, arguments.get());
+        }
+    }
+
+    /**
+     * Log a message at the WARN level according to the specified format
+     * and arguments.
      * <p/>
      * <p>This form avoids superfluous object creation when the logger
      * is disabled for the WARN level. </p>
@@ -520,6 +1119,51 @@ public interface Logger {
      * @param arg2   the second argument
      */
     public void warn(String format, Object arg1, Object arg2);
+
+    /**
+     * Log a message at the WARN level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(String format, Supplier<?> arg1, Object arg2) {
+        if (isWarnEnabled()) {
+            warn(format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * Log a message at the WARN level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(String format, Object arg1, Supplier<?> arg2) {
+        if (isWarnEnabled()) {
+            warn(format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * Log a message at the WARN level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isWarnEnabled()) {
+            warn(format, arg1.get(), arg2.get());
+        }
+    }
 
     /**
      * Log an exception (throwable) at the WARN level with an
@@ -559,6 +1203,21 @@ public interface Logger {
     public void warn(Marker marker, String format, Object arg);
 
     /**
+     * This method is similar to {@link #warn(String, Supplier)} method except that the
+     * marker data is also taken into consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, Supplier<?> arg) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, arg.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #warn(String, Object, Object)}
      * method except that the marker data is also taken into
      * consideration.
@@ -571,6 +1230,57 @@ public interface Logger {
     public void warn(Marker marker, String format, Object arg1, Object arg2);
 
     /**
+     * This method is similar to {@link #warn(String, Supplier, Object)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * This method is similar to {@link #warn(String, Object, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * This method is similar to {@link #warn(String, Supplier, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, arg1.get(), arg2.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #warn(String, Object...)}
      * method except that the marker data is also taken into
      * consideration.
@@ -580,6 +1290,38 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void warn(Marker marker, String format, Object... arguments);
+
+    /**
+     * This method is similar to {@link #warn(String, Supplier...)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, Supplier<?>... arguments) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, getAll(arguments));
+        }
+    }
+
+    /**
+     * This method is similar to {@link #warn(String, ArraySupplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void warn(Marker marker, String format, ArraySupplier<?> arguments) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, format, arguments.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #warn(String, Throwable)} method
@@ -620,6 +1362,20 @@ public interface Logger {
 
     /**
      * Log a message at the ERROR level according to the specified format
+     * and argument.
+     *
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void error(String format, Supplier<?> arg) {
+        if (isErrorEnabled()) {
+            error(format, arg.get());
+        }
+    }
+
+    /**
+     * Log a message at the ERROR level according to the specified format
      * and arguments.
      * <p/>
      * <p>This form avoids superfluous object creation when the logger
@@ -630,6 +1386,51 @@ public interface Logger {
      * @param arg2   the second argument
      */
     public void error(String format, Object arg1, Object arg2);
+
+    /**
+     * Log a message at the ERROR level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(String format, Supplier<?> arg1, Object arg2) {
+        if (isErrorEnabled()) {
+            error(format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * Log a message at the ERROR level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(String format, Object arg1, Supplier<?> arg2) {
+        if (isErrorEnabled()) {
+            error(format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * Log a message at the ERROR level according to the specified format
+     * and arguments.
+     *
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isErrorEnabled()) {
+            error(format, arg1.get(), arg2.get());
+        }
+    }
 
     /**
      * Log a message at the ERROR level according to the specified format
@@ -646,6 +1447,34 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void error(String format, Object... arguments);
+
+    /**
+     * Log a message at the ERROR level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void error(String format, Supplier<?>... arguments) {
+        if (isErrorEnabled()) {
+            error(format, getAll(arguments));
+        }
+    }
+
+    /**
+     * Log a message at the ERROR level according to the specified format
+     * and arguments.
+     *
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void error(String format, ArraySupplier<?> arguments) {
+        if (isErrorEnabled()) {
+            error(format, arguments.get());
+        }
+    }
 
     /**
      * Log an exception (throwable) at the ERROR level with an
@@ -685,6 +1514,21 @@ public interface Logger {
     public void error(Marker marker, String format, Object arg);
 
     /**
+     * This method is similar to {@link #error(String, Supplier)} method except that the
+     * marker data is also taken into consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg    the argument
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, Supplier<?> arg) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, arg.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #error(String, Object, Object)}
      * method except that the marker data is also taken into
      * consideration.
@@ -697,6 +1541,57 @@ public interface Logger {
     public void error(Marker marker, String format, Object arg1, Object arg2);
 
     /**
+     * This method is similar to {@link #error(String, Supplier, Object)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, arg1.get(), arg2);
+        }
+    }
+
+    /**
+     * This method is similar to {@link #error(String, Object, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, arg1, arg2.get());
+        }
+    }
+
+    /**
+     * This method is similar to {@link #error(String, Supplier, Supplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param format the format string
+     * @param arg1   the first argument
+     * @param arg2   the second argument
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, arg1.get(), arg2.get());
+        }
+    }
+
+    /**
      * This method is similar to {@link #error(String, Object...)}
      * method except that the marker data is also taken into
      * consideration.
@@ -706,6 +1601,38 @@ public interface Logger {
      * @param arguments a list of 3 or more arguments
      */
     public void error(Marker marker, String format, Object... arguments);
+
+    /**
+     * This method is similar to {@link #error(String, Supplier...)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a list of 3 or more suppliers of arguments
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, Supplier<?>... arguments) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, getAll(arguments));
+        }
+    }
+
+    /**
+     * This method is similar to {@link #error(String, ArraySupplier)}
+     * method except that the marker data is also taken into
+     * consideration.
+     *
+     * @param marker    the marker data specific to this log statement
+     * @param format    the format string
+     * @param arguments a supplier of an array of arguments
+     * @since 1.8
+     */
+    public default void error(Marker marker, String format, ArraySupplier<?> arguments) {
+        if (isErrorEnabled(marker)) {
+            error(marker, format, arguments.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #error(String, Throwable)}

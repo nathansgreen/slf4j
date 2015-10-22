@@ -33,7 +33,7 @@
   </scm>  
 
   <properties>
-    <required.jdk.version>1.5</required.jdk.version>
+    <required.jdk.version>1.8</required.jdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
