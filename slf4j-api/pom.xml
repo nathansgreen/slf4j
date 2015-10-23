@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.slf4j</groupId>
     <artifactId>slf4j-parent</artifactId>
-    <version>1.7.13-SNAPSHOT</version>
+    <version>1.8.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>slf4j-api</artifactId>
@@ -17,6 +17,10 @@
   <description>The slf4j API</description>
 
   <url>http://www.slf4j.org</url>
+
+  <properties>
+    <required.jdk.version>1.8</required.jdk.version>
+  </properties>
 
   <build>
     <plugins>
