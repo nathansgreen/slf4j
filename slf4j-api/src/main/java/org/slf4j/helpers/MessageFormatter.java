@@ -24,6 +24,9 @@
  */
 package org.slf4j.helpers;
 
+import org.slf4j.ArraySupplier;
+import org.slf4j.Supplier;
+
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,7 +119,7 @@ final public class MessageFormatter {
      * 
      * @param messagePattern
      *          The message pattern which will be parsed and formatted
-     * @param argument
+     * @param arg
      *          The argument to be substituted in place of the formatting anchor
      * @return The formatted message
      */
@@ -265,7 +268,9 @@ final public class MessageFormatter {
             sbuf.append("null");
             return;
         }
-        if (!o.getClass().isArray()) {
+        if (o instanceof ArraySupplier) {
+            objectArrayAppend(sbuf, ((ArraySupplier) o).get(), seenMap);
+        } else if (!o.getClass().isArray()) {
             safeObjectAppend(sbuf, o);
         } else {
             // check for primitive array types because they
@@ -294,7 +299,12 @@ final public class MessageFormatter {
 
     private static void safeObjectAppend(StringBuilder sbuf, Object o) {
         try {
-            String oAsString = o.toString();
+            String oAsString;
+            if (o.getClass() == Supplier.class) {
+                oAsString = ((Supplier) o).get().toString();
+            } else {
+                oAsString = o.toString();
+            }
             sbuf.append(oAsString);
         } catch (Throwable t) {
             System.err.println("SLF4J: Failed toString() invocation on an object of type [" + o.getClass().getName() + "]");

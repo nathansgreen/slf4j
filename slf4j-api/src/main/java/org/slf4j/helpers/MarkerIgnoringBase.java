@@ -24,8 +24,10 @@
  */
 package org.slf4j.helpers;
 
+import org.slf4j.ArraySupplier;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
+import org.slf4j.Supplier;
 
 /**
  * This class serves as base for adapters or native implementations of logging systems 
@@ -51,11 +53,35 @@ public abstract class MarkerIgnoringBase extends NamedLoggerBase implements Logg
         trace(format, arg);
     }
 
+    public void trace(Marker marker, String format, Supplier<?> arg) {
+        trace(format, arg);
+    }
+
     public void trace(Marker marker, String format, Object arg1, Object arg2) {
         trace(format, arg1, arg2);
     }
 
+    public void trace(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        trace(format, arg1, arg2);
+    }
+
+    public void trace(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        trace(format, arg1, arg2);
+    }
+
+    public void trace(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        trace(format, arg1, arg2);
+    }
+
     public void trace(Marker marker, String format, Object... arguments) {
+        trace(format, arguments);
+    }
+
+    public void trace(Marker marker, String format, Supplier<?>... arguments) {
+        trace(format, arguments);
+    }
+
+    public void trace(Marker marker, String format, ArraySupplier<?> arguments) {
         trace(format, arguments);
     }
 
@@ -75,11 +101,35 @@ public abstract class MarkerIgnoringBase extends NamedLoggerBase implements Logg
         debug(format, arg);
     }
 
+    public void debug(Marker marker, String format, Supplier<?> arg) {
+        debug(format, arg);
+    }
+
     public void debug(Marker marker, String format, Object arg1, Object arg2) {
         debug(format, arg1, arg2);
     }
 
+    public void debug(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        debug(format, arg1, arg2);
+    }
+
+    public void debug(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        debug(format, arg1, arg2);
+    }
+
+    public void debug(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        debug(format, arg1, arg2);
+    }
+
     public void debug(Marker marker, String format, Object... arguments) {
+        debug(format, arguments);
+    }
+
+    public void debug(Marker marker, String format, Supplier<?>... arguments) {
+        debug(format, arguments);
+    }
+
+    public void debug(Marker marker, String format, ArraySupplier<?> arguments) {
         debug(format, arguments);
     }
 
@@ -99,11 +149,35 @@ public abstract class MarkerIgnoringBase extends NamedLoggerBase implements Logg
         info(format, arg);
     }
 
+    public void info(Marker marker, String format, Supplier<?> arg) {
+        info(format, arg);
+    }
+
     public void info(Marker marker, String format, Object arg1, Object arg2) {
         info(format, arg1, arg2);
     }
 
+    public void info(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        info(format, arg1, arg2);
+    }
+
+    public void info(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        info(format, arg1, arg2);
+    }
+
+    public void info(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        info(format, arg1, arg2);
+    }
+
     public void info(Marker marker, String format, Object... arguments) {
+        info(format, arguments);
+    }
+
+    public void info(Marker marker, String format, Supplier<?>... arguments) {
+        info(format, arguments);
+    }
+
+    public void info(Marker marker, String format, ArraySupplier<?> arguments) {
         info(format, arguments);
     }
 
@@ -123,11 +197,35 @@ public abstract class MarkerIgnoringBase extends NamedLoggerBase implements Logg
         warn(format, arg);
     }
 
+    public void warn(Marker marker, String format, Supplier<?> arg) {
+        warn(format, arg);
+    }
+
     public void warn(Marker marker, String format, Object arg1, Object arg2) {
         warn(format, arg1, arg2);
     }
 
+    public void warn(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        warn(format, arg1, arg2);
+    }
+
+    public void warn(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        warn(format, arg1, arg2);
+    }
+
+    public void warn(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        warn(format, arg1, arg2);
+    }
+
     public void warn(Marker marker, String format, Object... arguments) {
+        warn(format, arguments);
+    }
+
+    public void warn(Marker marker, String format, Supplier<?>... arguments) {
+        warn(format, arguments);
+    }
+
+    public void warn(Marker marker, String format, ArraySupplier<?> arguments) {
         warn(format, arguments);
     }
 
@@ -147,11 +245,35 @@ public abstract class MarkerIgnoringBase extends NamedLoggerBase implements Logg
         error(format, arg);
     }
 
+    public void error(Marker marker, String format, Supplier<?> arg) {
+        error(format, arg);
+    }
+
     public void error(Marker marker, String format, Object arg1, Object arg2) {
         error(format, arg1, arg2);
     }
 
+    public void error(Marker marker, String format, Supplier<?> arg1, Object arg2) {
+        error(format, arg1, arg2);
+    }
+
+    public void error(Marker marker, String format, Object arg1, Supplier<?> arg2) {
+        error(format, arg1, arg2);
+    }
+
+    public void error(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
+        error(format, arg1, arg2);
+    }
+
     public void error(Marker marker, String format, Object... arguments) {
+        error(format, arguments);
+    }
+
+    public void error(Marker marker, String format, Supplier<?>... arguments) {
+        error(format, arguments);
+    }
+
+    public void error(Marker marker, String format, ArraySupplier<?> arguments) {
         error(format, arguments);
     }
 
