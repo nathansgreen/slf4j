@@ -24,9 +24,12 @@
  */
 package org.slf4j.helpers;
 
-import java.util.Arrays;
-
 import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -147,9 +150,19 @@ public class MessageFormatterTest {
                 throw new IllegalStateException("a");
             }
         };
-        result = MessageFormatter.format("Troublesome object {}", o).getMessage();
-        assertEquals("Troublesome object [FAILED toString()]", result);
-
+        final PrintStream stderr = System.err;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream(2048);
+        try {
+            System.setErr(new PrintStream(buffer));
+            result = MessageFormatter.format("Troublesome object {}", o).getMessage();
+            assertEquals("Troublesome object [FAILED toString()]", result);
+        } catch (Exception|Error e) {
+            try {
+                stderr.write(buffer.toByteArray());
+            } catch (IOException ex) {/*ignore*/}
+        } finally {
+            System.setErr(stderr);
+        }
     }
 
     @Test

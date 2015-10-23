@@ -96,6 +96,18 @@ public interface Logger {
     public void trace(String msg);
 
     /**
+     * Log a message at the TRACE level.
+     *
+     * @param msg the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void trace(Supplier<String> msg) {
+        if (isTraceEnabled()) {
+            trace(msg.get());
+        }
+    }
+
+    /**
      * Log a message at the TRACE level according to the specified format
      * and argument.
      * <p/>
@@ -255,6 +267,19 @@ public interface Logger {
      * @since 1.4
      */
     public void trace(Marker marker, String msg);
+
+    /**
+     * Log a message with the specific Marker at the TRACE level.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param msg    the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void trace(Marker marker, Supplier<String> msg) {
+        if (isTraceEnabled(marker)) {
+            trace(marker, msg.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #trace(String, Object)} method except that the
@@ -417,6 +442,18 @@ public interface Logger {
     public void debug(String msg);
 
     /**
+     * Log a message at the DEBUG level.
+     *
+     * @param msg the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void debug(Supplier<String> msg) {
+        if (isDebugEnabled()) {
+            debug(msg.get());
+        }
+    }
+
+    /**
      * Log a message at the DEBUG level according to the specified format
      * and argument.
      * <p/>
@@ -570,6 +607,19 @@ public interface Logger {
      * @param msg    the message string to be logged
      */
     public void debug(Marker marker, String msg);
+
+    /**
+     * Log a message with the specific Marker at the DEBUG level.
+     *
+     * @param marker the marker data specific to this log statement
+     * @param msg    the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void debug(Marker marker, Supplier<String> msg) {
+        if (isDebugEnabled(marker)) {
+            debug(marker, msg.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #debug(String, Object)} method except that the
@@ -728,6 +778,18 @@ public interface Logger {
     public void info(String msg);
 
     /**
+     * Log a message at the INFO level.
+     *
+     * @param msg the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void info(Supplier<String> msg) {
+        if (isInfoEnabled()) {
+            info(msg.get());
+        }
+    }
+
+    /**
      * Log a message at the INFO level according to the specified format
      * and argument.
      * <p/>
@@ -880,6 +942,19 @@ public interface Logger {
      * @param msg    the message string to be logged
      */
     public void info(Marker marker, String msg);
+
+    /**
+     * Log a message with the specific Marker at the INFO level.
+     *
+     * @param marker The marker specific to this log statement
+     * @param msg    the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void info(Marker marker, Supplier<String> msg) {
+        if (isInfoEnabled(marker)) {
+            info(marker, msg.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #info(String, Object)} method except that the
@@ -1038,6 +1113,18 @@ public interface Logger {
     public void warn(String msg);
 
     /**
+     * Log a message at the WARN level.
+     *
+     * @param msg the supplier of message string to be logged
+     * @since 1.8
+     */
+    public default void warn(Supplier<String> msg) {
+        if (isWarnEnabled()) {
+            warn(msg.get());
+        }
+    }
+
+    /**
      * Log a message at the WARN level according to the specified format
      * and argument.
      * <p/>
@@ -1191,6 +1278,19 @@ public interface Logger {
      * @param msg    the message string to be logged
      */
     public void warn(Marker marker, String msg);
+
+    /**
+     * Log a message with the specific Marker at the WARN level.
+     *
+     * @param marker The marker specific to this log statement
+     * @param msg    the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void warn(Marker marker, Supplier<String> msg) {
+        if (isWarnEnabled(marker)) {
+            warn(marker, msg.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #warn(String, Object)} method except that the
@@ -1349,6 +1449,18 @@ public interface Logger {
     public void error(String msg);
 
     /**
+     * Log a message at the ERROR level.
+     *
+     * @param msg the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void error(Supplier<String> msg) {
+        if (isErrorEnabled()) {
+            error(msg.get());
+        }
+    }
+
+    /**
      * Log a message at the ERROR level according to the specified format
      * and argument.
      * <p/>
@@ -1502,6 +1614,19 @@ public interface Logger {
      * @param msg    the message string to be logged
      */
     public void error(Marker marker, String msg);
+
+    /**
+     * Log a message with the specific Marker at the ERROR level.
+     *
+     * @param marker The marker specific to this log statement
+     * @param msg    the supplier of the message string to be logged
+     * @since 1.8
+     */
+    public default void error(Marker marker, Supplier<String> msg) {
+        if (isErrorEnabled(marker)) {
+            error(marker, msg.get());
+        }
+    }
 
     /**
      * This method is similar to {@link #error(String, Object)} method except that the

@@ -91,16 +91,17 @@ public class InvocationTest extends TestCase {
 
     public void testNull() {
         Logger logger = LoggerFactory.getLogger("testNull");
-        logger.debug(null);
-        logger.info(null);
-        logger.warn(null);
-        logger.error(null);
+        String nil = null;
+        logger.debug(nil);
+        logger.info(nil);
+        logger.warn(nil);
+        logger.error(nil);
 
         Exception e = new Exception("This is a test exception.");
-        logger.debug(null, e);
-        logger.info(null, e);
-        logger.warn(null, e);
-        logger.error(null, e);
+        logger.debug(nil, e);
+        logger.info(nil, e);
+        logger.warn(nil, e);
+        logger.error(nil, e);
     }
 
     public void testMarker() {
