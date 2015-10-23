@@ -25,7 +25,8 @@
 
 package org.slf4j;
 
-import static org.slf4j.helpers.Util.getAll;
+import static org.slf4j.Util.get;
+import static org.slf4j.Util.getAll;
 
 /**
  * The org.slf4j.Logger interface is the main user entry point of SLF4J API.
@@ -118,7 +119,7 @@ public interface Logger {
      */
     public default void trace(String format, Supplier<?> arg) {
         if (isTraceEnabled()) {
-            trace(format, arg.get());
+            trace(format, get(arg));
         }
     }
 
@@ -147,7 +148,7 @@ public interface Logger {
      */
     public default void trace(String format, Supplier<?> arg1, Object arg2) {
         if (isTraceEnabled()) {
-            trace(format, arg1.get(), arg2);
+            trace(format, get(arg1), arg2);
         }
     }
 
@@ -162,7 +163,7 @@ public interface Logger {
      */
     public default void trace(String format, Object arg1, Supplier<?> arg2) {
         if (isTraceEnabled()) {
-            trace(format, arg1, arg2.get());
+            trace(format, arg1, get(arg2));
         }
     }
 
@@ -177,7 +178,7 @@ public interface Logger {
      */
     public default void trace(String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isTraceEnabled()) {
-            trace(format, arg1.get(), arg2.get());
+            trace(format, get(arg1), get(arg2));
         }
     }
 
@@ -221,7 +222,7 @@ public interface Logger {
      */
     public default void trace(String format, ArraySupplier<?> arguments) {
         if (isTraceEnabled()) {
-            trace(format, arguments.get());
+            trace(format, get(arguments));
         }
     }
 
@@ -278,7 +279,7 @@ public interface Logger {
      */
     public default void trace(Marker marker, String format, Supplier<?> arg) {
         if (isTraceEnabled(marker)) {
-            trace(marker, format, arg.get());
+            trace(marker, format, get(arg));
         }
     }
 
@@ -308,7 +309,7 @@ public interface Logger {
      */
     public default void trace(Marker marker, String format, Supplier<?> arg1, Object arg2) {
         if (isTraceEnabled(marker)) {
-            trace(marker, format, arg1.get(), arg2);
+            trace(marker, format, get(arg1), arg2);
         }
     }
 
@@ -325,7 +326,7 @@ public interface Logger {
      */
     public default void trace(Marker marker, String format, Object arg1, Supplier<?> arg2) {
         if (isTraceEnabled(marker)) {
-            trace(marker, format, arg1, arg2.get());
+            trace(marker, format, arg1, get(arg2));
         }
     }
 
@@ -342,7 +343,7 @@ public interface Logger {
      */
     public default void trace(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isTraceEnabled(marker)) {
-            trace(marker, format, arg1.get(), arg2.get());
+            trace(marker, format, get(arg1), get(arg2));
         }
     }
 
@@ -386,7 +387,7 @@ public interface Logger {
      */
     public default void trace(Marker marker, String format, ArraySupplier<?> argArray) {
         if (isTraceEnabled(marker)) {
-            trace(marker, format, argArray.get());
+            trace(marker, format, get(argArray));
         }
     }
 
@@ -438,7 +439,7 @@ public interface Logger {
      */
     public default void debug(String format, Supplier<?> arg) {
         if (isDebugEnabled()) {
-            debug(format, arg.get());
+            debug(format, get(arg));
         }
     }
 
@@ -466,7 +467,7 @@ public interface Logger {
      */
     public default void debug(String format, Supplier<?> arg1, Object arg2) {
         if (isDebugEnabled()) {
-            debug(format, arg1.get(), arg2);
+            debug(format, get(arg1), arg2);
         }
     }
 
@@ -481,7 +482,7 @@ public interface Logger {
      */
     public default void debug(String format, Object arg1, Supplier<?> arg2) {
         if (isDebugEnabled()) {
-            debug(format, arg1, arg2.get());
+            debug(format, arg1, get(arg2));
         }
     }
 
@@ -496,7 +497,7 @@ public interface Logger {
      */
     public default void debug(String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isDebugEnabled()) {
-            debug(format, arg1.get(), arg2.get());
+            debug(format, get(arg1), get(arg2));
         }
     }
 
@@ -540,7 +541,7 @@ public interface Logger {
      */
     public default void debug(String format, ArraySupplier<?> arguments) {
         if (isDebugEnabled()) {
-            debug(format, arguments.get());
+            debug(format, get(arguments));
         }
     }
 
@@ -592,7 +593,7 @@ public interface Logger {
      */
     public default void debug(Marker marker, String format, Supplier<?> arg) {
         if (isDebugEnabled(marker)) {
-            debug(marker, format, arg.get());
+            debug(marker, format, get(arg));
         }
     }
 
@@ -621,7 +622,7 @@ public interface Logger {
      */
     public default void debug(Marker marker, String format, Supplier<?> arg1, Object arg2) {
         if (isDebugEnabled(marker)) {
-            debug(marker, format, arg1.get(), arg2);
+            debug(marker, format, get(arg1), arg2);
         }
     }
 
@@ -638,7 +639,7 @@ public interface Logger {
      */
     public default void debug(Marker marker, String format, Object arg1, Supplier<?> arg2) {
         if (isDebugEnabled(marker)) {
-            debug(marker, format, arg1, arg2.get());
+            debug(marker, format, arg1, get(arg2));
         }
     }
 
@@ -655,7 +656,7 @@ public interface Logger {
      */
     public default void debug(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isDebugEnabled(marker)) {
-            debug(marker, format, arg1.get(), arg2.get());
+            debug(marker, format, get(arg1), get(arg2));
         }
     }
 
@@ -698,7 +699,7 @@ public interface Logger {
      */
     public default void debug(Marker marker, String format, ArraySupplier<?> arguments) {
         if (isDebugEnabled(marker)) {
-            debug(marker, format, arguments.get());
+            debug(marker, format, get(arguments));
         }
     }
 
@@ -749,7 +750,7 @@ public interface Logger {
      */
     public default void info(String format, Supplier<?> arg) {
         if (isInfoEnabled()) {
-            info(format, arg.get());
+            info(format, get(arg));
         }
     }
 
@@ -777,7 +778,7 @@ public interface Logger {
      */
     public default void info(String format, Supplier<?> arg1, Object arg2) {
         if (isInfoEnabled()) {
-            info(format, arg1.get(), arg2);
+            info(format, get(arg1), arg2);
         }
     }
 
@@ -792,7 +793,7 @@ public interface Logger {
      */
     public default void info(String format, Object arg1, Supplier<?> arg2) {
         if (isInfoEnabled()) {
-            info(format, arg1, arg2.get());
+            info(format, arg1, get(arg2));
         }
     }
 
@@ -807,7 +808,7 @@ public interface Logger {
      */
     public default void info(String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isInfoEnabled()) {
-            info(format, arg1.get(), arg2.get());
+            info(format, get(arg1), get(arg2));
         }
     }
 
@@ -851,7 +852,7 @@ public interface Logger {
      */
     public default void info(String format, ArraySupplier<?> arguments) {
         if (isInfoEnabled()) {
-            info(format, arguments.get());
+            info(format, get(arguments));
         }
     }
 
@@ -902,7 +903,7 @@ public interface Logger {
      */
     public default void info(Marker marker, String format, Supplier<?> arg) {
         if (isInfoEnabled(marker)) {
-            info(marker, format, arg.get());
+            info(marker, format, get(arg));
         }
     }
 
@@ -931,7 +932,7 @@ public interface Logger {
      */
     public default void info(Marker marker, String format, Supplier<?> arg1, Object arg2) {
         if (isInfoEnabled(marker)) {
-            info(marker, format, arg1.get(), arg2);
+            info(marker, format, get(arg1), arg2);
         }
     }
 
@@ -948,7 +949,7 @@ public interface Logger {
      */
     public default void info(Marker marker, String format, Object arg1, Supplier<?> arg2) {
         if (isInfoEnabled(marker)) {
-            info(marker, format, arg1, arg2.get());
+            info(marker, format, arg1, get(arg2));
         }
     }
 
@@ -965,7 +966,7 @@ public interface Logger {
      */
     public default void info(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isInfoEnabled(marker)) {
-            info(marker, format, arg1.get(), arg2.get());
+            info(marker, format, get(arg1), get(arg2));
         }
     }
 
@@ -1008,7 +1009,7 @@ public interface Logger {
      */
     public default void info(Marker marker, String format, ArraySupplier<?> arguments) {
         if (isInfoEnabled(marker)) {
-            info(marker, format, arguments.get());
+            info(marker, format, get(arguments));
         }
     }
 
@@ -1059,7 +1060,7 @@ public interface Logger {
      */
     public default void warn(String format, Supplier<?> arg) {
         if (isWarnEnabled()) {
-            warn(format, arg.get());
+            warn(format, get(arg));
         }
     }
 
@@ -1103,7 +1104,7 @@ public interface Logger {
      */
     public default void warn(String format, ArraySupplier<?> arguments) {
         if (isWarnEnabled()) {
-            warn(format, arguments.get());
+            warn(format, get(arguments));
         }
     }
 
@@ -1131,7 +1132,7 @@ public interface Logger {
      */
     public default void warn(String format, Supplier<?> arg1, Object arg2) {
         if (isWarnEnabled()) {
-            warn(format, arg1.get(), arg2);
+            warn(format, get(arg1), arg2);
         }
     }
 
@@ -1146,7 +1147,7 @@ public interface Logger {
      */
     public default void warn(String format, Object arg1, Supplier<?> arg2) {
         if (isWarnEnabled()) {
-            warn(format, arg1, arg2.get());
+            warn(format, arg1, get(arg2));
         }
     }
 
@@ -1161,7 +1162,7 @@ public interface Logger {
      */
     public default void warn(String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isWarnEnabled()) {
-            warn(format, arg1.get(), arg2.get());
+            warn(format, get(arg1), get(arg2));
         }
     }
 
@@ -1213,7 +1214,7 @@ public interface Logger {
      */
     public default void warn(Marker marker, String format, Supplier<?> arg) {
         if (isWarnEnabled(marker)) {
-            warn(marker, format, arg.get());
+            warn(marker, format, get(arg));
         }
     }
 
@@ -1242,7 +1243,7 @@ public interface Logger {
      */
     public default void warn(Marker marker, String format, Supplier<?> arg1, Object arg2) {
         if (isWarnEnabled(marker)) {
-            warn(marker, format, arg1.get(), arg2);
+            warn(marker, format, get(arg1), arg2);
         }
     }
 
@@ -1259,7 +1260,7 @@ public interface Logger {
      */
     public default void warn(Marker marker, String format, Object arg1, Supplier<?> arg2) {
         if (isWarnEnabled(marker)) {
-            warn(marker, format, arg1, arg2.get());
+            warn(marker, format, arg1, get(arg2));
         }
     }
 
@@ -1276,7 +1277,7 @@ public interface Logger {
      */
     public default void warn(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isWarnEnabled(marker)) {
-            warn(marker, format, arg1.get(), arg2.get());
+            warn(marker, format, get(arg1), get(arg2));
         }
     }
 
@@ -1319,7 +1320,7 @@ public interface Logger {
      */
     public default void warn(Marker marker, String format, ArraySupplier<?> arguments) {
         if (isWarnEnabled(marker)) {
-            warn(marker, format, arguments.get());
+            warn(marker, format, get(arguments));
         }
     }
 
@@ -1370,7 +1371,7 @@ public interface Logger {
      */
     public default void error(String format, Supplier<?> arg) {
         if (isErrorEnabled()) {
-            error(format, arg.get());
+            error(format, get(arg));
         }
     }
 
@@ -1398,7 +1399,7 @@ public interface Logger {
      */
     public default void error(String format, Supplier<?> arg1, Object arg2) {
         if (isErrorEnabled()) {
-            error(format, arg1.get(), arg2);
+            error(format, get(arg1), arg2);
         }
     }
 
@@ -1413,7 +1414,7 @@ public interface Logger {
      */
     public default void error(String format, Object arg1, Supplier<?> arg2) {
         if (isErrorEnabled()) {
-            error(format, arg1, arg2.get());
+            error(format, arg1, get(arg2));
         }
     }
 
@@ -1428,7 +1429,7 @@ public interface Logger {
      */
     public default void error(String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isErrorEnabled()) {
-            error(format, arg1.get(), arg2.get());
+            error(format, get(arg1), get(arg2));
         }
     }
 
@@ -1472,7 +1473,7 @@ public interface Logger {
      */
     public default void error(String format, ArraySupplier<?> arguments) {
         if (isErrorEnabled()) {
-            error(format, arguments.get());
+            error(format, get(arguments));
         }
     }
 
@@ -1524,7 +1525,7 @@ public interface Logger {
      */
     public default void error(Marker marker, String format, Supplier<?> arg) {
         if (isErrorEnabled(marker)) {
-            error(marker, format, arg.get());
+            error(marker, format, get(arg));
         }
     }
 
@@ -1553,7 +1554,7 @@ public interface Logger {
      */
     public default void error(Marker marker, String format, Supplier<?> arg1, Object arg2) {
         if (isErrorEnabled(marker)) {
-            error(marker, format, arg1.get(), arg2);
+            error(marker, format, get(arg1), arg2);
         }
     }
 
@@ -1570,7 +1571,7 @@ public interface Logger {
      */
     public default void error(Marker marker, String format, Object arg1, Supplier<?> arg2) {
         if (isErrorEnabled(marker)) {
-            error(marker, format, arg1, arg2.get());
+            error(marker, format, arg1, get(arg2));
         }
     }
 
@@ -1587,7 +1588,7 @@ public interface Logger {
      */
     public default void error(Marker marker, String format, Supplier<?> arg1, Supplier<?> arg2) {
         if (isErrorEnabled(marker)) {
-            error(marker, format, arg1.get(), arg2.get());
+            error(marker, format, get(arg1), get(arg2));
         }
     }
 
@@ -1630,7 +1631,7 @@ public interface Logger {
      */
     public default void error(Marker marker, String format, ArraySupplier<?> arguments) {
         if (isErrorEnabled(marker)) {
-            error(marker, format, arguments.get());
+            error(marker, format, get(arguments));
         }
     }
 

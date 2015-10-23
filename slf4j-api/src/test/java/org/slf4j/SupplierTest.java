@@ -62,6 +62,21 @@ public class SupplierTest {
     }
 
     @Test
+    public void testNull() {
+        logger.marker = false;
+        logger.trace("", (Supplier) null);
+        logger.trace("", () -> null);
+        logger.trace("", null, null);
+        logger.trace("", (Supplier) null, (Supplier) null);
+        logger.trace("", () -> null, null);
+        logger.trace("", () -> null, () -> null);
+        logger.trace("", (Object) null, (Object) null);
+        logger.trace("", (ArraySupplier) null);
+        logger.trace("", () -> null, () -> null, () -> null);
+        logger.trace("", () -> null, null, () -> null);
+    }
+
+    @Test
     public void testTrace() {
         logger.marker = false;
         assrt(TRACE_1_ARG, () -> logger.trace("{}    ", () -> diff));

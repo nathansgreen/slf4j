@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004-2015 QOS.ch
+ * Copyright (c) 2004-2014 QOS.ch
  * All rights reserved.
  *
  * Permission is hereby granted, free  of charge, to any person obtaining
@@ -23,8 +23,6 @@
  *
  */
 package org.slf4j.helpers;
-
-import org.slf4j.Supplier;
 
 /**
  * An internal utility class.
@@ -82,20 +80,6 @@ public final class Util {
 
     static final public void report(String msg) {
         System.err.println("SLF4J: " + msg);
-    }
-
-    /**
-     * Implementation detail for default methods
-     *
-     * @param arguments one or more suppliers
-     * @return results of evaluating all suppliers
-     */
-    public static Object[] getAll(Supplier<?>[] arguments) {
-        Object[] args = new Object[arguments.length];
-        for (int i = 0; i < arguments.length; i++) {
-            args[i] = arguments[i].get();
-        }
-        return args;
     }
 
 }
