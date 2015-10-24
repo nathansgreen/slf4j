@@ -6,7 +6,6 @@ package org.slf4j;
  * @param <T> the type of result supplied
  * @see java.util.function.Supplier
  */
-@FunctionalInterface
 public interface Supplier<T> {
 
     /**

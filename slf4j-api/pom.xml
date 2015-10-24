@@ -25,6 +25,50 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>lambda</id>
+            <goals><goal>compile</goal></goals>
+            <configuration>
+              <source>1.5</source>
+              <target>1.5</target>
+              <includes>
+                <include>org/slf4j/ArraySupplier.java</include>
+                <include>org/slf4j/Supplier.java</include>
+                <include>org/slf4j/Util.java</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-compile</id>
+            <goals><goal>compile</goal></goals>
+            <configuration>
+              <includes>
+                <include>org/slf4j/Logger.java</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>the-rest</id>
+            <goals><goal>compile</goal></goals>
+            <configuration>
+              <source>1.5</source>
+              <target>1.5</target>
+              <includes>
+                <include>org/slf4j/*Factory.java</include>
+                <include>org/slf4j/Marker.java</include>
+                <include>org/slf4j/MDC.java</include>
+                <include>org/slf4j/helpers/*.java</include>
+                <include>org/slf4j/impl/*.java</include>
+                <include>org/slf4j/spi/*.java</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
         <configuration>
