@@ -43,7 +43,8 @@ concatenation, `String.format` or some other less-than-ideal method of
 constructing a string. The only case where the second version would
 really make sense is when there is a need to log an expensive
 `toString` call and nothing else, which I have never found to be
-appropriate in production code.
+appropriate in production code. Doing a bunch of extra API work to let
+users avoid typing `"{}",` in a logging call doesn't seem worthwhile.
 
 
 ## Source incompatibility

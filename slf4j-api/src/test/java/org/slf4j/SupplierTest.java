@@ -52,7 +52,7 @@ public class SupplierTest {
         return arr;
     }
 
-    LoggerImpl logger = new LoggerImpl();
+    LoggerImpl logger;
     Marker marker = new BasicMarkerFactory().getDetachedMarker("SupplierTest");
     int diff = new Random().nextInt(10000);
 
@@ -63,10 +63,11 @@ public class SupplierTest {
 
     @Test
     public void testNull() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         logger.trace("", (Supplier) null);
         logger.trace("", () -> null);
         logger.trace("", null, null);
+        // unnecessary cast:
         logger.trace("", (Supplier) null, (Supplier) null);
         logger.trace("", () -> null, null);
         logger.trace("", () -> null, () -> null);
@@ -78,7 +79,7 @@ public class SupplierTest {
 
     @Test
     public void testTrace() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         assrt(TRACE_1_ARG, () -> logger.trace("{}    ", () -> diff));
         assrt(TRACE_2_ARG, () -> logger.trace("{}{}  ", () -> diff, diff));
         assrt(TRACE_2_ARG, () -> logger.trace("{}{}  ", diff, () -> diff));
@@ -89,7 +90,7 @@ public class SupplierTest {
 
     @Test
     public void testMarkerTrace() {
-        logger.marker = true;
+        logger = new LoggerImpl(true);
         assrt(MTRACE_1_ARG, () -> logger.trace(marker, "{}    ", () -> diff));
         assrt(MTRACE_2_ARG, () -> logger.trace(marker, "{}{}  ", () -> diff, diff));
         assrt(MTRACE_2_ARG, () -> logger.trace(marker, "{}{}  ", diff, () -> diff));
@@ -100,7 +101,7 @@ public class SupplierTest {
 
     @Test
     public void testDebug() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         assrt(DEBUG_1_ARG, () -> logger.debug("{}    ", () -> diff));
         assrt(DEBUG_2_ARG, () -> logger.debug("{}{}  ", () -> diff, diff));
         assrt(DEBUG_2_ARG, () -> logger.debug("{}{}  ", diff, () -> diff));
@@ -111,7 +112,7 @@ public class SupplierTest {
 
     @Test
     public void testMarkerDebug() {
-        logger.marker = true;
+        logger = new LoggerImpl(true);
         assrt(MDEBUG_1_ARG, () -> logger.debug(marker, "{}    ", () -> diff));
         assrt(MDEBUG_2_ARG, () -> logger.debug(marker, "{}{}  ", () -> diff, diff));
         assrt(MDEBUG_2_ARG, () -> logger.debug(marker, "{}{}  ", diff, () -> diff));
@@ -122,7 +123,7 @@ public class SupplierTest {
 
     @Test
     public void testInfo() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         assrt(INFO_1_ARG, () -> logger.info("{}    ", () -> diff));
         assrt(INFO_2_ARG, () -> logger.info("{}{}  ", () -> diff, diff));
         assrt(INFO_2_ARG, () -> logger.info("{}{}  ", diff, () -> diff));
@@ -133,7 +134,7 @@ public class SupplierTest {
 
     @Test
     public void testMarkerInfo() {
-        logger.marker = true;
+        logger = new LoggerImpl(true);
         assrt(MINFO_1_ARG, () -> logger.info(marker, "{}    ", () -> diff));
         assrt(MINFO_2_ARG, () -> logger.info(marker, "{}{}  ", () -> diff, diff));
         assrt(MINFO_2_ARG, () -> logger.info(marker, "{}{}  ", diff, () -> diff));
@@ -144,7 +145,7 @@ public class SupplierTest {
 
     @Test
     public void testWarn() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         assrt(WARN_1_ARG, () -> logger.warn("{}    ", () -> diff));
         assrt(WARN_2_ARG, () -> logger.warn("{}{}  ", () -> diff, diff));
         assrt(WARN_2_ARG, () -> logger.warn("{}{}  ", diff, () -> diff));
@@ -155,7 +156,7 @@ public class SupplierTest {
 
     @Test
     public void testMarkerWarn() {
-        logger.marker = true;
+        logger = new LoggerImpl(true);
         assrt(MWARN_1_ARG, () -> logger.warn(marker, "{}    ", () -> diff));
         assrt(MWARN_2_ARG, () -> logger.warn(marker, "{}{}  ", () -> diff, diff));
         assrt(MWARN_2_ARG, () -> logger.warn(marker, "{}{}  ", diff, () -> diff));
@@ -166,7 +167,7 @@ public class SupplierTest {
 
     @Test
     public void testError() {
-        logger.marker = false;
+        logger = new LoggerImpl(false);
         assrt(ERROR_1_ARG, () -> logger.error("{}    ", () -> diff));
         assrt(ERROR_2_ARG, () -> logger.error("{}{}  ", () -> diff, diff));
         assrt(ERROR_2_ARG, () -> logger.error("{}{}  ", diff, () -> diff));
@@ -177,7 +178,7 @@ public class SupplierTest {
 
     @Test
     public void testMarkerError() {
-        logger.marker = true;
+        logger = new LoggerImpl(true);
         assrt(MERROR_1_ARG, () -> logger.error(marker, "{}    ", () -> diff));
         assrt(MERROR_2_ARG, () -> logger.error(marker, "{}{}  ", () -> diff, diff));
         assrt(MERROR_2_ARG, () -> logger.error(marker, "{}{}  ", diff, () -> diff));
@@ -189,6 +190,10 @@ public class SupplierTest {
     static class LoggerImpl implements Logger {
         private State state = DEFAULT;
         Boolean marker = null;
+
+        LoggerImpl(boolean marker) {
+            this.marker = marker;
+        }
 
         public State state() {
             State r = state;
