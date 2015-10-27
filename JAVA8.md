@@ -59,3 +59,12 @@ So far, it appears that only the single-argument call suffers from
 source incompatibility for this specific case. The two-arg and var-arg
 calls seem to work without difficulty.
 
+
+## Implementation notes
+
+Even though the default methods in `Logger` use static methods, those
+methods do not live in the `Logger` class. This was done both out of a
+concern for method visibility and to ensure compatibility with tools
+like Retrolambda. No built-in Java 8 functions are used; again, this
+ensures compatibility with older systems and avoids any runtime
+dependency on Java 8 libraries.
