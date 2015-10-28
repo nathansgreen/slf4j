@@ -46,6 +46,32 @@ really make sense is when there is a need to log an expensive
 appropriate in production code. Doing a bunch of extra API work to let
 users avoid typing `"{}",` in a logging call doesn't seem worthwhile.
 
+Both single-result and array-result lambdas have been added to the API.
+While an array-result lambda is not strictly necessary, there are
+probably cases where it is desirable. Passing a single lambda that
+returns an array is likely to be more efficient than passing a
+significant number of lambdas in a varargs array.
+
+```java
+// traditional way of doing lazy evaluation
+if (logger.isDebugEnabled() {
+    logger.debug("Shipping status change to {} on order {} for customer {}",
+        shipment.getStatus(), shipment.getOrderInfo().getId(),
+        shipment.getOrderInfo().getCustomer().getName());
+}
+
+// one lambda per argument
+logger.debug("Shipping status change to {} on order {} for customer {}",
+    () -> shipment.getStatus(), () -> shipment.getOrderInfo().getId(),
+    () -> shipment.getOrderInfo().getCustomer().getName());
+
+// one lambda returning an array
+logger.debug("Shipping status change to {} on order {} for customer {}",
+    () -> new Object[]{ shipment.getStatus(), shipment.getOrderInfo().getId(),
+        shipment.getOrderInfo().getCustomer().getName() });
+```
+
+
 
 ## Source incompatibility
 
